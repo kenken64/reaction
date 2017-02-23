@@ -124,6 +124,17 @@ function avaPost(requestUrl, options) {
   return result;
 }
 
+/**
+ * @summary Gets the full list of Avalara-supported entity use codes.
+ * @returns {Object} API response
+ */
+taxCalc.getEntityCodes = function () {
+  const baseUrl = getUrl();
+  const requestUrl = `${baseUrl}definitions/entityusecodes`;
+  const result = avaGet(requestUrl);
+  return _.get(result, "data.value");
+};
+
 // API Methods
 
 /**
@@ -491,5 +502,6 @@ export default taxCalc;
 Meteor.methods({
   "avalara/addressValidation": taxCalc.validateAddress,
   "avalara/getTaxCodes": taxCalc.getTaxCodes,
-  "avalara/testCredentials": taxCalc.testCredentials
+  "avalara/testCredentials": taxCalc.testCredentials,
+  "avalara/getEntityCodes": taxCalc.getEntityCodes
 });

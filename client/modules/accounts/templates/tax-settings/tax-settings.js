@@ -1,6 +1,7 @@
 import { Accounts } from "/lib/collections";
 import { Template } from "meteor/templating";
 import { Reaction } from "/client/api";
+import { TaxEntityCodes } from "/client/collections";
 
 Template.taxSettingsPanel.helpers({
   account() {
@@ -10,6 +11,10 @@ Template.taxSettingsPanel.helpers({
       });
     }
     return null;
+  },
+  entityCodes() {
+    console.log(TaxEntityCodes.find().fetch()); // Empty Array
+    return TaxEntityCodes.find().fetch();
   }
 });
 
