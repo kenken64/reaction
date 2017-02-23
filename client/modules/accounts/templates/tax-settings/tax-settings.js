@@ -1,3 +1,4 @@
+import _ from "lodash";
 import { Accounts } from "/lib/collections";
 import { Template } from "meteor/templating";
 import { Reaction } from "/client/api";
@@ -13,8 +14,9 @@ Template.taxSettingsPanel.helpers({
     return null;
   },
   entityCodes() {
-    console.log(TaxEntityCodes.find().fetch()); // Empty Array
-    return TaxEntityCodes.find().fetch();
+    return TaxEntityCodes.find().map((entityCode) => {
+      return _.assign({}, entityCode, { label: entityCode.name, value: entityCode.code });
+    });
   }
 });
 
@@ -22,4 +24,11 @@ Template.taxSettingsPanel.onCreated(function () {
   this.autorun(() => {
     this.subscribe("Account");
   });
+
+  Meteor.call("avalara/getEntityCodes", (error, entityCodes) => {
+    _.each(entityCodes, (entityCode) => {
+      TaxEntityCodes.insert(entityCode);
+    });
+  });
 });
+

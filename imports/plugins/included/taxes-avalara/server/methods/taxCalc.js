@@ -59,7 +59,7 @@ function getAuthData(packageData = taxCalc.getPackageData()) {
  * @param {Object} options - An object of other options
  * @returns {Object} Response from call
  */
-function avaGet(requestUrl, options) {
+function avaGet(requestUrl, options = {}) {
   const logObject = {};
   const pkgData = taxCalc.getPackageData();
   const appVersion = Reaction.getAppVersion();

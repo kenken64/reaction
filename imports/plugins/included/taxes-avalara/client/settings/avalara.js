@@ -3,7 +3,7 @@ import { Template } from "meteor/templating";
 import { Tracker } from "meteor/tracker";
 import { Meteor } from "meteor/meteor";
 import { AutoForm } from "meteor/aldeed:autoform";
-import { Countries, TaxEntityCodes } from "/client/collections";
+import { Countries } from "/client/collections";
 import { Reaction, i18next } from "/client/api";
 import { Packages, Logs } from "/lib/collections";
 import { AvalaraPackageConfig } from "../../lib/collections/schemas";
@@ -58,12 +58,6 @@ Template.avalaraSettings.events({
 AutoForm.hooks({
   "avalara-update-form": {
     onSuccess: function () {
-      Meteor.call("avalara/getEntityCodes", (error, entityCodes) => {
-        _.each(entityCodes, (entityCode) => {
-          console.log('inserting....'); // confirm save
-          TaxEntityCodes.insert(entityCode);
-        });
-      });
       return Alerts.toast(i18next.t("admin.taxSettings.shopTaxMethodsSaved"),
         "success");
     },
